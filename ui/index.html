@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ender Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app" class="app hidden" aria-label="Administration menu">
+    <section class="panel">
+      <header class="topbar">
+        <div class="brand-mark">E</div>
+        <div class="brand-copy"><strong>ENDER<span>ADMIN</span></strong><small>SERVER CONTROL</small></div>
+        <div class="live"><i></i> LIVE</div>
+        <button id="close" class="icon-button" aria-label="Close menu" title="Close">×</button>
+      </header>
+      <div class="body-grid">
+        <aside class="sidebar">
+          <div class="side-label">MANAGEMENT</div>
+          <button class="nav-item active" data-view="players"><span class="nav-icon">♙</span> Players <span id="player-count" class="count">0</span></button>
+          <button class="nav-item" data-view="announce"><span class="nav-icon">◉</span> Announcements</button>
+          <div class="sidebar-footer"><span class="status-dot"></span> Permission protected</div>
+        </aside>
+        <section class="content">
+          <div id="players-view" class="view">
+            <div class="heading-row">
+              <div><div class="eyebrow">SERVER TOOLS / PLAYER MANAGEMENT</div><h1>Players</h1><p class="subhead">Select a player to manage their session.</p></div>
+              <button id="refresh" class="secondary-button"><span>↻</span> Refresh</button>
+            </div>
+            <div class="toolbar"><label class="search"><span>⌕</span><input id="search" type="text" placeholder="Search name or server ID" autocomplete="off"></label><div id="online-label" class="online-label"><i></i> 0 ONLINE</div></div>
+            <div class="player-layout">
+              <div class="player-list-wrap">
+                <div class="table-head"><span>PLAYER</span><span>LATENCY</span></div>
+                <div id="player-list" class="player-list"></div>
+                <div id="empty" class="empty-state"><span>⌕</span><strong>No players found</strong><small>Try another name or refresh the list.</small></div>
+              </div>
+              <section id="details" class="details empty-details">
+                <div class="detail-placeholder"><div class="placeholder-mark">♙</div><strong>Select a player</strong><span>Player actions will appear here.</span></div>
+                <div id="selected-details" class="selected-details hidden">
+                  <div class="selected-head"><div id="avatar" class="avatar">?</div><div><div class="eyebrow">SELECTED PLAYER</div><h2 id="selected-name">Player</h2><div class="id-line">SERVER ID <b id="selected-id">0</b></div></div></div>
+                  <div class="detail-divider"></div>
+                  <label class="field-label" for="reason">ACTION REASON <span>OPTIONAL</span></label>
+                  <input id="reason" class="text-input" type="text" maxlength="120" placeholder="Enter a reason">
+                  <div class="action-grid">
+                    <button class="action-button" data-action="teleportTo"><span class="action-icon">⌖</span><span><b>Teleport to</b><small>Move to this player</small></span></button>
+                    <button class="action-button" data-action="bring"><span class="action-icon">↙</span><span><b>Bring player</b><small>Move player to you</small></span></button>
+                    <button class="action-button" data-action="heal"><span class="action-icon">＋</span><span><b>Heal</b><small>Restore health</small></span></button>
+                    <button class="action-button" data-action="revive"><span class="action-icon">♥</span><span><b>Revive</b><small>Resurrect player</small></span></button>
+                    <button id="freeze-button" class="action-button" data-action="freeze"><span class="action-icon">❄</span><span><b id="freeze-label">Freeze</b><small>Toggle movement lock</small></span></button>
+                  </div>
+                  <button id="kick-button" class="danger-button" data-action="kick"><span>⌑</span> Kick player</button>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div id="announce-view" class="view hidden">
+            <div class="heading-row"><div><div class="eyebrow">SERVER TOOLS / COMMUNICATION</div><h1>Announcements</h1><p class="subhead">Send a message to everyone currently online.</p></div></div>
+            <div class="announce-box"><label class="field-label" for="announcement">MESSAGE <span>MAX 180 CHARACTERS</span></label><textarea id="announcement" maxlength="180" placeholder="Write a server-wide announcement..."></textarea><div class="announce-footer"><span id="char-count">0 / 180</span><button id="send-announcement" class="primary-button">Send announcement <span>→</span></button></div></div>
+            <div class="notice"><span>i</span><p>Announcements are visible to every player online and identify you as the sender.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+    <div id="confirm" class="modal hidden"><div class="modal-card"><div class="modal-icon">!</div><h2 id="confirm-title">Confirm action</h2><p id="confirm-message">Are you sure?</p><div class="modal-actions"><button id="cancel-confirm" class="secondary-button">Cancel</button><button id="accept-confirm" class="danger-button">Confirm</button></div></div></div>
+    <div id="announcement-banner" class="announcement-banner hidden"><div class="banner-tag">SERVER ANNOUNCEMENT</div><strong id="banner-sender"></strong><p id="banner-message"></p></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
